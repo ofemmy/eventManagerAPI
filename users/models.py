@@ -73,11 +73,12 @@ class UserProfile(Address, models.Model):
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
-        primary_key=True,
         related_name='profile'
     )
     telephone = models.CharField(max_length=25, blank=True)
     company = models.CharField(max_length=255, blank=True, null=True)
     website = models.CharField(max_length=40, blank=True, null=True)
 
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}"
 # superuser: email:user@user.com pass:user123456

@@ -9,6 +9,13 @@ class IsUserOrReadOnly(permissions.BasePermission):
         return obj.id == request.user.id
 
 
+class IsProfileOwnerOrReadOnly(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return obj.user == request.user
+
+
 class IsAuthenticatedWithCreateExemption(permissions.BasePermission):
     """
     only grant permission for creating new resource even without logging in
