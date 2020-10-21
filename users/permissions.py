@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AnonymousUser
 from rest_framework import permissions
 
 
@@ -18,4 +19,4 @@ class IsAuthenticatedWithCreateExemption(permissions.BasePermission):
         if request.method == "POST":
             return True
         else:
-            return False
+            return not isinstance(request.user, AnonymousUser)
