@@ -30,8 +30,8 @@ urlpatterns = format_suffix_patterns([
     path('', api_root),
     path('users/', user_list, name='user-list'),
     path('profiles/', user_profile_list, name='user-profile-list'),
-    path('users/<int:pk>/', user_detail, name='user-detail'),
     path('users/<int:pk>/profile/', user_profile_detail, name='user-profile-detail'),
+    path('users/<int:pk>/', user_detail, name='user-detail'),
     path('api-auth/', include('rest_framework.urls')),
     # path('', APIRootView.as_view())
 ])

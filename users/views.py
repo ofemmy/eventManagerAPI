@@ -55,7 +55,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
     def get_object(self):
-        queryset = self.get_queryset().get()
+        queryset = self.get_queryset()
         filter = {'user__id': self.kwargs["pk"]}
         obj = get_object_or_404(queryset, **filter)
         self.check_object_permissions(self.request, obj)
