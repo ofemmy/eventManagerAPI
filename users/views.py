@@ -1,12 +1,24 @@
 # Create your views here.
 from django.contrib.auth.models import AnonymousUser
 from rest_framework import viewsets
+from rest_framework.decorators import api_view
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
 
 from users.models import User, UserProfile
 from users.permissions import IsUserOrReadOnly, IsAuthenticatedWithCreateExemption, IsProfileOwnerOrReadOnly
 from users.serializer import UserSerializer, UserProfileSerializer
+
+
+@api_view(["GET"])
+def api_root(request, format=None):
+    return Response({
+        'users': reverse('user-list', request=request, format=format),
+        'profiles': reverse('user-profile-list', request=request, format=format)
+    })
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -41,3 +53,10 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
     def perform_update(self, serializer):
         serializer.save(user=self.request.user)
+
+    def get_object(self):
+        queryset = self.get_queryset().get()
+        filter = {'user__id': self.kwargs["pk"]}
+        obj = get_object_or_404(queryset, **filter)
+        self.check_object_permissions(self.request, obj)
+        return obj

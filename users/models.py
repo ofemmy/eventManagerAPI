@@ -75,7 +75,7 @@ class UserProfile(Address, models.Model):
         on_delete=models.CASCADE,
         related_name='profile'
     )
-    telephone = models.CharField(max_length=25, blank=True)
+    telephone = models.CharField(max_length=25, blank=True,null=True)
     company = models.CharField(max_length=255, blank=True, null=True)
     website = models.CharField(max_length=40, blank=True, null=True)
 
