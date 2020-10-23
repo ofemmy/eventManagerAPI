@@ -18,6 +18,7 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework.urlpatterns import format_suffix_patterns
 
+from event.urls import event_list, event_detail, event_registration, event_registration_detail
 from users.urls import user_detail, user_profile_detail, user_list, user_profile_list
 from users.views import api_root
 
@@ -30,6 +31,10 @@ urlpatterns = format_suffix_patterns([
     path('', api_root),
     path('users/', user_list, name='user-list'),
     path('profiles/', user_profile_list, name='user-profile-list'),
+    path('events/', event_list, name='event-list'),
+    path('events/registrations/', event_registration, name='event-registration-list'),
+    path('events/registrations/<int:pk>/', event_registration_detail, name='event-registration-list'),
+    path('events/<int:pk>/', event_detail, name='event-detail'),
     path('users/<int:pk>/profile/', user_profile_detail, name='user-profile-detail'),
     path('users/<int:pk>/', user_detail, name='user-detail'),
     path('api-auth/', include('rest_framework.urls')),

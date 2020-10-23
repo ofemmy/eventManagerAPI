@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from users.models import User
@@ -37,7 +38,8 @@ class Event(Address, models.Model):
     description = models.TextField(blank=True, null=True)
     category = models.CharField(max_length=30, choices=EventCategory.choices)
     status = models.CharField(max_length=10, choices=EventStatus.choices, default=EventStatus.DRAFT)
-    open_slots_left = models.IntegerField()
+    max_attendees = models.IntegerField()
+    num_of_registered = models.IntegerField()
 
     def __str__(self):
         return self.title
@@ -48,6 +50,14 @@ class EventRegistration(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.DO_NOTHING)
     registration_date = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return self.event.title
+    class Meta:
+        unique_together = ('event', 'user',)
 
+    def save(self, *args, **kwargs):
+        event = self.event
+        if event.num_of_registered == event.max_attendees:
+            raise ValidationError(message="Maximum number of allowable attendees reached")
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.event} - {self.user}"

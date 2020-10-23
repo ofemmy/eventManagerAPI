@@ -5,28 +5,28 @@ from .models import Event, EventRegistration
 
 # Register your models here.
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'open_slots_left', 'category', 'status')
+    list_display = ('title', 'max_attendees', 'num_of_registered', 'category', 'status')
     list_filter = ('status', 'category',)
-    readonly_fields = ('organizer',)
     fieldsets = (
         (None, {
             'fields': ('title', 'organizer', 'description', 'start_date', 'end_date')
         }),
+        (None, {
+            'fields': ('num_of_registered', 'max_attendees', 'category', 'status')
+        }),
         ('Location', {
             'fields': ('address_line1', 'address_line2', 'zipCode', 'city', 'country')
-        }),
-        (None, {
-            'fields': ('open_slots_left', 'category', 'status')
         })
+
     )
 
-    def save_model(self, request, obj, form, change):
-        obj.organizer = request.user
-        obj.save()
+    # def save_model(self, request, obj, form, change):
+    #     obj.organizer = request.user
+    #     obj.save()
 
 
 class EventRegistrationAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'user')
+    list_display = ('title', 'user', 'registration_date')
 
     def title(self, obj):
         return obj.event.title
@@ -37,3 +37,5 @@ class EventRegistrationAdmin(admin.ModelAdmin):
 
 admin.site.register(Event, EventAdmin)
 admin.site.register(EventRegistration, EventRegistrationAdmin)
+
+# Todo Give admin ability to select the organizer but only via admin panel

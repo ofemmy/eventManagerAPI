@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'users.apps.UsersConfig',
-    'event',
+    'event.apps.EventConfig',
     'utils'
 ]
 
@@ -53,7 +53,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'eventManager.urls'
-
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'eventManager.event.exceptions.custom_exception_handler'
+}
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

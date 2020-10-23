@@ -17,7 +17,8 @@ from users.serializer import UserSerializer, UserProfileSerializer
 def api_root(request, format=None):
     return Response({
         'users': reverse('user-list', request=request, format=format),
-        'profiles': reverse('user-profile-list', request=request, format=format)
+        'profiles': reverse('user-profile-list', request=request, format=format),
+        'events': reverse('event-list', request=request, format=format)
     })
 
 
@@ -55,6 +56,11 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
     def get_object(self):
+        """
+        This function makes sure that it is the user id
+        that is used to query the profile and not just the
+        profile id
+        """
         queryset = self.get_queryset()
         filter = {'user__id': self.kwargs["pk"]}
         obj = get_object_or_404(queryset, **filter)
