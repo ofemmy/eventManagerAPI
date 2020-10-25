@@ -15,6 +15,12 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
+class UserReadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ["id", "email", "first_name", "last_name"]
+
+
 class UserProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True, required=False)
 

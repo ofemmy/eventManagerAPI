@@ -2,6 +2,7 @@ import logging
 
 from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework.exceptions import ValidationError as DRFValidationError
+from rest_framework.views import exception_handler as drf_exception_handler
 
 LOG = logging.getLogger(__name__)
 
@@ -18,4 +19,4 @@ def custom_exception_handler(exception, context):
         else:
             LOG.error("BAD VALIDATION MESSAGE: %s", exception)
         exception = DRFValidationError(detail=detail)
-    return exception
+    return drf_exception_handler(exception, context)

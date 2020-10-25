@@ -54,7 +54,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'eventManager.urls'
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'eventManager.event.exceptions.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'event.exceptions.custom_exception_handler'
 }
 TEMPLATES = [
     {

@@ -10,13 +10,11 @@ event_detail = EventViewSet.as_view({
     'patch': 'partial_update',
     'delete': 'destroy'
 })
-event_registration = EventRegistrationViewSet.as_view({
+event_registration_list = EventRegistrationViewSet.as_view({
     'get': 'list',
-    'post': 'create',
-    'put': 'update',
-    'patch': 'partial_update',
-    'delete': 'destroy'
+    'post': 'create'
 })
 event_registration_detail = EventRegistrationViewSet.as_view({
-    'get': 'retrieve'
+    'get': 'retrieve',
+    'delete': 'destroy'
 })
