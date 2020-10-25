@@ -13,13 +13,7 @@ from users.permissions import IsUserOrReadOnly, IsAuthenticatedWithCreateExempti
 from users.serializer import UserSerializer, UserProfileSerializer
 
 
-@api_view(["GET"])
-def api_root(request, format=None):
-    return Response({
-        'users': reverse('user-list', request=request, format=format),
-        'profiles': reverse('user-profile-list', request=request, format=format),
-        'events': reverse('event-list', request=request, format=format)
-    })
+
 
 
 class UserViewSet(viewsets.ModelViewSet):

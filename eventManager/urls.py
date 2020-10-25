@@ -20,11 +20,13 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from event.urls import event_list, event_detail, event_registration_detail, event_registration_list
 from users.urls import user_detail, user_profile_detail, user_list, user_profile_list
-from users.views import api_root
+from utils.views import api_root
 
 router = routers.DefaultRouter()
-# router.register(r'users', UserViewSet)
-# router.register(r'profiles', UserProfileViewSet)
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = format_suffix_patterns([
     path('admin/', admin.site.urls),
@@ -38,5 +40,7 @@ urlpatterns = format_suffix_patterns([
     path('users/<int:pk>/profile/', user_profile_detail, name='user-profile-detail'),
     path('users/<int:pk>/', user_detail, name='user-detail'),
     path('api-auth/', include('rest_framework.urls')),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     # path('', APIRootView.as_view())
 ])
