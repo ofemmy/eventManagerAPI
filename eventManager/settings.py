@@ -54,7 +54,22 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'eventManager.urls'
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'event.exceptions.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'event.exceptions.custom_exception_handler',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'utils.renderer.CustomJSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer'
+    ),
+}
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=2),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
 }
 TEMPLATES = [
     {
