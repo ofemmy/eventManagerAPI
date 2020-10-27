@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'users.apps.UsersConfig',
     'event.apps.EventConfig',
-    'utils'
+    'utils',
 ]
 
 MIDDLEWARE = [
