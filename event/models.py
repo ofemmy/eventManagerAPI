@@ -33,13 +33,16 @@ class Event(Address, models.Model):
 
     title = models.CharField(max_length=255)
     max_attendees = models.IntegerField()
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
+    start_date = models.DateField()
+    start_time = models.TimeField()
+    end_date = models.DateField()
+    end_time = models.TimeField()
     description = models.TextField(blank=True, null=True)
     category = models.CharField(max_length=30, choices=EventCategory.choices)
     status = models.CharField(max_length=10, choices=EventStatus.choices, default=EventStatus.DRAFT)
     organizer = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    num_of_registered = models.IntegerField()
+    num_of_registered = models.IntegerField(default=0)
+    cover_img_url = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.title
