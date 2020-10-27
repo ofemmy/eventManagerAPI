@@ -81,4 +81,3 @@ class UserProfile(Address, models.Model):
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
-# superuser: email:user@user.com pass:user123456
